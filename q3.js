@@ -1,20 +1,22 @@
+db.createCollection("products");
+
 db.products.insertMany([
-    {
-      name: "Tarun",
-      description: "Hello",
-      imageurl: "https://bsmedia.business-standard.com/_media/bs/img/article/2024-09/04/full/1725434023-926.jpg",
-      price: 1000
-    },
-    {
-      name: "Rithwick",
-      description: "Hello",
-      imageurl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/004-soymilk.jpg/1200px-004-soymilk.jpg",
-      price: 2000
-    },
-    {
-      name: "Ram",
-      description: "Hello",
-      imageurl: "https://thatbreadlady.com/wp-content/uploads/2020/10/french-bread.jpg",
-      price: 3000
-    }
-  ])
+  {
+    name: "Apple",
+    description: "Fresh and juicy red apple.",
+    imgUrl: "https://example.com/images/apple.jpg",
+    price: 1.5
+  },
+  {
+    name: "Banana",
+    description: "Ripe yellow bananas full of energy.",
+    imgUrl: "https://example.com/images/banana.jpg",
+    price: 0.75
+  },
+  {
+    name: "Orange",
+    description: "Citrus fruit rich in Vitamin C.",
+    imgUrl: "https://example.com/images/orange.jpg",
+    price: 1.2
+  }
+]);
