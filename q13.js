@@ -1,88 +1,60 @@
 db.orders.insertMany([
-    {
-      empId: ObjectId("683860a0490c4b45407cb256"),
-      items: { 1: 3, 3: 2 },
-      orderValue: 345,
-      status: "pending",
-    },
-    {
-      empId: ObjectId("683860a0490c4b45407cb256"),
-      items: { 3: 3, 2: 2 },
-      orderValue: 600,
-      status: "pending",
-    },
-  ]);
-  
-  db.employees.aggregate([
-    {
-      $lookup: {
-        from: "orders",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Ord",
-      },
-    },
-    { $project: { name: 1, "Ord.orderValue": 1 } },
-  ]);
-  
-  db.employees.aggregate([
-    {
-      $lookup: {
-        from: "orders",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Ord",
-      },
-    },
-    { $unwind: "$Ord" },
-    { $project: { name: 1, "Ord.orderValue": 1 } },
-  ]);
-  
-  db.employees.aggregate([
-    {
-      $lookup: {
-        from: "orders",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Ord",
-      },
-    },
-    {
-      $lookup: {
-        from: "address",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Addr",
-      },
-    },
-  ]);
-  
-  db.employees.aggregate([
-    { $match: { email: "chastity@gmail.com" } },
-    {
-      $lookup: {
-        from: "orders",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Ord",
-      },
-    },
-    { $unwind: "$Ord" },
-    {
-      $lookup: {
-        from: "address",
-        localField: "_id",
-        foreignField: "empId",
-        as: "Addr",
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        name: 1,
-        "Addr.residence.city": 1,
-        "Ord.orderValue": 1,
-        "Ord.status": 1,
-      },
-    },
-  ]);
+  {
+    empId: ObjectId("68372843c8f8ecee66fce74b"),
+    items: { "1": 2, "2": 1 },
+    orderValue: 300,
+    status: "Pending"
+  },
+  {
+    empId: ObjectId("6837284fc8f8ecee66fce74c"),
+    items: { "3": 4 },
+    orderValue: 480,
+    status: "Completed"
+  },
+  {
+    empId: ObjectId("6837284fc8f8ecee66fce74d"),
+    items: { "1": 1, "2": 1, "4": 2 },
+    orderValue: 550,
+    status: "Pending"
+  },
+  {
+    empId: ObjectId("6838694ef75ef1d8bcebe297"),
+    items: { "2": 3 },
+    orderValue: 270,
+    status: "Cancelled"
+  },
+  {
+    empId: ObjectId("68386d58f75ef1d8bcebe298"),
+    items: { "3": 2, "5": 1 },
+    orderValue: 340,
+    status: "Completed"
+  }
+]);
+
+
+db.orders.find();
+
+
+
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "employees",           
+      localField: "empId",         
+      foreignField: "_id",        
+      as: "empOrderDetails"
+    }
+  },
+  {
+    $unwind: "$empOrderDetails"
+  },
+  {
+    $project: {
+      name: "$empOrderDetails.name",        
+      email: "$empOrderDetails.email",      
+      orderValue: 1,
+      items: 1,
+      status: 1
+    }
+  }
+]);
